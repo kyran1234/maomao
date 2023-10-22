@@ -1,4 +1,4 @@
-name: Auto Merge on Dev Branch Update
+name: Run Shell Script on Dev Branch Update
 
 on:
   push:
@@ -6,19 +6,21 @@ on:
       - dev
 
 jobs:
-  merge_to_main:
+  run_script:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v2
 
       - name: Run Shell Script
-        run: bash hello.sh
-
-      - name: Merge to Main
         run: |
-          git checkout main
-          git merge dev --no-ff --no-edit
-          git push origin main
+          chmod +x hello.sh
+          ./hello.sh
+
+      - name: Merge to Main Branch
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
 
