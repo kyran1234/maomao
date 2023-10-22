@@ -14,9 +14,9 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run Shell Script
-        run: bash /home/kryan/gittest/hello.sh
-          chmod +x hello.sh
-          ./hello.sh
+        run: |
+          chmod +x ../hello.sh
+          ../hello.sh
 
       - name: Merge to Main Branch
         uses: ad-m/github-push-action@master
