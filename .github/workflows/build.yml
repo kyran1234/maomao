@@ -1,0 +1,58 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - master # 或者你希望触发的分支
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Blog
+        run: npm run build # 这里的命令需要根据你的项目配置来修改
+
+      - name: Create Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: blog-artifact
+          path: ./dist # 这里的路径需要根据你的项目配置来修改
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: blog-artifact
+
+      - name: Remove Existing Files
+        run: rm -rf ./path/to/main # 这里的路径需要根据你的项目配置来修改
+
+      - name: Move Artifact to Main Branch
+        run: mv ./path/to/artifact ./path/to/main # 这里的路径需要根据你的项目配置来修改
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Deploy blog artifact"
+          git push origin main # 这里的分支名需要根据你的项目配置来修改
