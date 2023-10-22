@@ -13,11 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run Shell Script
-        run: |
-          chmod +x ../hello.sh
-          ../hello.sh
-
       - name: Merge to Main Branch
         uses: ad-m/github-push-action@master
         with:
