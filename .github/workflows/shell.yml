@@ -1,4 +1,4 @@
-name: Shell Script
+name: Run Hello Script
 
 on:
   push:
@@ -13,8 +13,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Run shell script
+      - name: Run Hello Script
         run: |
-              bash /home/runner/work/maomao/maomao
-              chmod +x hello.sh
-              ./hello.sh
+          chmod +x hello.sh
+          ./hello.sh
+
+      - name: Merge to main branch
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const github = context.repo;
+            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+            octokit.pulls.create({
+              owner: github.owner,
+              repo: github.repo,
+              title: 'Merge dev to main',
+              head: 'dev',
+              base: 'main',
+              maintainer_can_modify: true
+            });
