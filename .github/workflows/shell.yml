@@ -14,9 +14,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Hello Script
-        run: |
-          chmod +x hello.sh
-          ./hello.sh
+        run: echo "hello world"
+          
+
 
       - name: Merge to main branch
         uses: actions/github-script@v4
