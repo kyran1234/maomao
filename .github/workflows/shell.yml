@@ -15,6 +15,6 @@ jobs:
 
       - name: Run shell script
         run: |
-              bash /home/kryan/gittest/.github/workflows/hello.sh
+              bash /home/runner/work/maomao/maomao/hello.sh
               chmod +x hello.sh
               ./hello.sh
