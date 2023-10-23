@@ -15,12 +15,10 @@ jobs:
 
       - name: Run Hello Script
         run: echo "hello world"
-          
 
-steps:
-  - name: Merge main to release/.+
-    uses: alagos/regex-merge@v1.2
-    with:
-      accessToken: ${{ secrets.GITHUB_TOKEN }}
-      headBranch: main
-      branchRegex: '^(release|staging)\/.+'
+      - name: Merge main to release/.+
+        uses: alagos/regex-merge@v1.2
+        with:
+             accessToken: ${{ secrets.GITHUB_TOKEN }}
+             headBranch: main
+             branchRegex: '^(release|staging)\/.+' 
