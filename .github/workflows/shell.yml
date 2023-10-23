@@ -20,16 +20,22 @@ jobs:
 
       - name: Merge to main branch
         uses: actions/github-script@v4
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const github = context.repo;
-            const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
-            octokit.pulls.create({
-              owner: kryan1234,
-              repo: maomao,
-              title: 'Merge dev to main',
-              head: 'dev',
-              base: 'main',
-              maintainer_can_modify: true
-            });
+  with:
+    github-token: ${{ secrets.GITHUB_TOKEN }}
+    script: |
+      const owner = 'kryan1234';
+      const repo = 'maomao';
+      const head = 'dev';
+      const base = 'main';
+      const maintainer_can_modify = true;
+      
+      const github = context.repo;
+      const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+      octokit.pulls.create({
+        owner: owner,
+        repo: repo,
+        title: 'Merge dev to main',
+        head: head,
+        base: base,
+        maintainer_can_modify: maintainer_can_modify
+      });
